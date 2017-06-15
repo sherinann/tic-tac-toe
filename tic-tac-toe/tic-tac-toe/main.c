@@ -9,18 +9,19 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
-const int WIDTH=800,HEIGHT=600;
+const int WIDTH=800,HEIGHT=800;
 
 int main(int argc, const char * argv[]) {
     
-    SDL_Surface *imageSurface;
-    SDL_Surface *windowSurface;
+    SDL_Surface* imageSurface= NULL;
+    SDL_Surface* windowSurface =NULL;
     
     if( SDL_Init(SDL_INIT_EVERYTHING)<0){
         printf("error %s",SDL_GetError());
     }
     
-    SDL_Window *window= SDL_CreateWindow("Tic Tac Toe", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
+    SDL_Window *window= SDL_CreateWindow("Tic Tac Toe", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+    
     windowSurface= SDL_GetWindowSurface(window);
     
     if(NULL==window){
@@ -38,7 +39,7 @@ int main(int argc, const char * argv[]) {
     while (1) {
         if(SDL_PollEvent(& windowEvent)){
             
-            if(windowEvent.type==SDL_QUIT){
+            if(SDL_QUIT==windowEvent.type){
                 break;
             }
         }
