@@ -1,0 +1,12 @@
+
+# files to be ignored
+.idea/copyright/
+.idea/.name
+.idea/compiler.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/tic-tac-toe.iml
+.idea/vcs.xml
+.idea/workspace.xml
+
+.DS_Store
