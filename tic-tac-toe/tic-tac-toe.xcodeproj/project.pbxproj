@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A85EA8921EF2821700266FEC /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A85EA8911EF2821700266FEC /* main.c */; };
 		A85EA89A1EF283EA00266FEC /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A85EA8991EF283EA00266FEC /* libSDL2-2.0.0.dylib */; };
+		A85EA89F1EF2EA2200266FEC /* interface.c in Sources */ = {isa = PBXBuildFile; fileRef = A85EA89E1EF2EA2200266FEC /* interface.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +28,8 @@
 		A85EA88E1EF2821700266FEC /* tic-tac-toe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "tic-tac-toe"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A85EA8911EF2821700266FEC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		A85EA8991EF283EA00266FEC /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../usr/local/Cellar/sdl2/2.0.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
+		A85EA89C1EF2E73E00266FEC /* interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		A85EA89E1EF2EA2200266FEC /* interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interface.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				A85EA8911EF2821700266FEC /* main.c */,
+				A85EA89C1EF2E73E00266FEC /* interface.h */,
+				A85EA89E1EF2EA2200266FEC /* interface.c */,
 			);
 			path = "tic-tac-toe";
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A85EA8921EF2821700266FEC /* main.c in Sources */,
+				A85EA89F1EF2EA2200266FEC /* interface.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +273,7 @@
 				A85EA8971EF2821700266FEC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
