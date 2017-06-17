@@ -14,7 +14,7 @@
 #define true 1
 #define false 0
 
-const int WIDTH=800,HEIGHT=800;
+const int WIDTH=1000,HEIGHT=1000;
 
 int quit=false;
 
@@ -25,17 +25,24 @@ int main(int argc, const char * argv[]) {
     SDL_Surface* playSurface= NULL;
     SDL_Surface* windowSurface =NULL;
     SDL_Surface* quitSurface= NULL;
+    SDL_Surface* headSurface= NULL;
     
     SDL_Rect DestPlay;
     
-    DestPlay.x = 200;
-    DestPlay.y = 500;
+    DestPlay.x = 300;
+    DestPlay.y = 600;
     
     
     SDL_Rect DestQuit;
     
-    DestQuit.x = 400;
-    DestQuit.y = 500;
+    DestQuit.x = 500;
+    DestQuit.y = 600;
+    
+    SDL_Rect DestHead;
+    
+    DestHead.x = 10;
+    DestHead.y = 100;
+    
     
     
     if( SDL_Init(SDL_INIT_EVERYTHING)<0){
@@ -55,22 +62,16 @@ int main(int argc, const char * argv[]) {
     
     
     
+    headSurface=initialise("tictactoe.bmp");
     
-    playSurface = SDL_LoadBMP("play.bmp");
-   if(NULL==playSurface){
-       printf("image could not be loaded %s",SDL_GetError());
-        
-   }
+    playSurface=initialise("play.bmp");
     
-    quitSurface= SDL_LoadBMP("quit.bmp");
-    if(NULL==quitSurface){
-        printf("image could not be loaded %s",SDL_GetError());
-        
-    }
+    quitSurface=initialise("quit.bmp");
+    
     
     while (1) {
         
-        SDL_FillRect( windowSurface, NULL, SDL_MapRGB( windowSurface->format, 0xFF, 0x44, 0x44 ) );
+        SDL_FillRect( windowSurface, NULL, SDL_MapRGB( windowSurface->format, 0x66, 0x66, 0x99) );
         
         if(SDL_PollEvent(& windowEvent)){
             
@@ -81,6 +82,7 @@ int main(int argc, const char * argv[]) {
         }
         
         
+        SDL_BlitSurface(headSurface,NULL,windowSurface,&DestHead);
         
         SDL_BlitSurface(playSurface,NULL,windowSurface,&DestPlay);
         
@@ -90,13 +92,15 @@ int main(int argc, const char * argv[]) {
         SDL_UpdateWindowSurface(window);
     }
     
+    SDL_FreeSurface(headSurface);
     SDL_FreeSurface(playSurface);
     SDL_FreeSurface(windowSurface);
-     SDL_FreeSurface(quitSurface);
+    SDL_FreeSurface(quitSurface);
     
     playSurface=NULL;
     windowSurface=NULL;
-     quitSurface=NULL;
+    quitSurface=NULL;
+    headSurface=NULL;
     
     
     SDL_DestroyWindow(window);

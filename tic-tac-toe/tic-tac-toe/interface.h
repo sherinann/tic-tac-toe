@@ -13,3 +13,5 @@
 
 #endif /* interface_h */
 
+SDL_Surface* initialise(char *);
+
