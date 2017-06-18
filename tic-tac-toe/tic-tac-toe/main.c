@@ -26,22 +26,42 @@ int main(int argc, const char * argv[]) {
     SDL_Surface* windowSurface =NULL;
     SDL_Surface* quitSurface= NULL;
     SDL_Surface* headSurface= NULL;
+    SDL_Surface* boardSurface= NULL;
     
     SDL_Rect DestPlay;
     
-    DestPlay.x = 300;
-    DestPlay.y = 600;
+    DestPlay.x = 750;
+    DestPlay.y = 300;
+
     
     
     SDL_Rect DestQuit;
     
-    DestQuit.x = 500;
-    DestQuit.y = 600;
+    DestQuit.x = 750;
+    DestQuit.y = 500;
     
     SDL_Rect DestHead;
     
-    DestHead.x = 10;
-    DestHead.y = 100;
+    DestHead.x = 5;
+    DestHead.y = 10;
+    DestHead.w = 100;
+    DestHead.h = 100;
+
+    
+    
+    SDL_Rect DestBoard;
+    
+    DestBoard.x = 50;
+    DestBoard.y = 90;
+    DestBoard.w = 300;
+    DestBoard.h=400;
+    
+    
+   // SDL_Rect Destnew;
+    
+    //DestBoard.x = 10;
+    //DestBoard.y = 10;
+    
     
     
     
@@ -64,9 +84,14 @@ int main(int argc, const char * argv[]) {
     
     headSurface=initialise("tictactoe.bmp");
     
+    boardSurface=initialise("board.bmp");
+    
     playSurface=initialise("play.bmp");
     
     quitSurface=initialise("quit.bmp");
+    
+    
+    
     
     
     while (1) {
@@ -82,12 +107,19 @@ int main(int argc, const char * argv[]) {
         }
         
         
+        //SDL_BlitScaled(headSurface,NULL,windowSurface,&Destnew);
+        
         SDL_BlitSurface(headSurface,NULL,windowSurface,&DestHead);
+        
         
         SDL_BlitSurface(playSurface,NULL,windowSurface,&DestPlay);
         
         
         SDL_BlitSurface(quitSurface,NULL,windowSurface,&DestQuit);
+        
+        
+        SDL_BlitSurface(boardSurface,NULL,windowSurface,&DestBoard);
+        
         
         SDL_UpdateWindowSurface(window);
     }
@@ -96,11 +128,13 @@ int main(int argc, const char * argv[]) {
     SDL_FreeSurface(playSurface);
     SDL_FreeSurface(windowSurface);
     SDL_FreeSurface(quitSurface);
+    SDL_FreeSurface(boardSurface);
     
     playSurface=NULL;
     windowSurface=NULL;
     quitSurface=NULL;
     headSurface=NULL;
+    boardSurface=NULL;
     
     
     SDL_DestroyWindow(window);
