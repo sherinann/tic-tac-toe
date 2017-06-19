@@ -26,6 +26,58 @@ int p[2];
 
 
 int checkwin(int mark){
+    int i,j,count;
+	//check if any row has 3 marked boxes
+	for(i=0;i<3;i++){
+		count=0;
+		for(j=0;j<3;j++){
+			if(board[i][j]==mark){
+				count++;
+			}
+		}
+		// row has 3 marked boxes
+		if(count==3){
+				return 1;
+			}
+
+	}
+	// check if any coloums have 3 marked boxes
+	for(j=0;j<3;j++){
+		count=0;
+		for(i=0;i<3;i++){
+			if(board[i][j]==mark){
+				count++;
+			}
+
+		}
+		// coloumn has 3 marked boxes
+		if(count==3){
+			return 1;
+		}
+
+	}
+	//check diagonal for need to block
+	count=0;
+	for(i=0;i<3;i++){
+		if(board[i][i]==mark)
+			count++;
+	}
+	if(count==3){
+		return 1;
+	
+	}
+
+	//check anti diagonal for need to block
+	count=0;
+	for(i=0;i<3;i++){
+		if(board[i][2-i]==mark)
+			count++;
+	}
+	if(count==2){
+			return 1;
+	
+		}
+
     return 0;
 }
 
@@ -34,19 +86,15 @@ int checkwin(int mark){
 //this function is to find out if any of the rows , columns or diagonals have 2 boxes marked by computer or player
 //blocked(which player sending request )
 int blocked(int mark){
-    int check,i,count,j;
+    int i,count,j;
 	//p[0] denote row/coloumn  p[1] to denote row or coloumn number
 	p[0]=0;
 	p[1]=0;
-	if(mark==COMPUTER)
-		check=2;
-	else
-		check=1;
 	//checking if any row has 2 marked boxes. if yes then it has to be blocked
 	for(i=0;i<3;i++){
 		count=0;
 		for(j=0;j<3;j++){
-			if(board[i][j]==check){
+			if(board[i][j]==mark){
 				count++;
 			}
 		}
@@ -65,7 +113,7 @@ int blocked(int mark){
 	for(j=0;j<3;j++){
 		count=0;
 		for(i=0;i<3;i++){
-			if(board[i][j]==check){
+			if(board[i][j]==mark){
 				count++;
 			}
 
@@ -82,7 +130,7 @@ int blocked(int mark){
 	//check diagonal for need to block
 	count=0;
 	for(i=0;i<3;i++){
-		if(board[i][i]==check)
+		if(board[i][i]==mark)
 			count++;
 	}
 	if(count==2){
@@ -94,7 +142,7 @@ int blocked(int mark){
 	//check anti diagonal for need to block
 	count=0;
 	for(i=0;i<3;i++){
-		if(board[i][2-i]==check)
+		if(board[i][2-i]==mark)
 			count++;
 	}
 	if(count==2){
@@ -109,7 +157,8 @@ int blocked(int mark){
 
 //to make move on behalf of the computer
 void moveComputer(){
-    int i,j;
+    
+    int i,j,posi = 0,posj = 0;
 	//nee to block
 	if(blocked(COMPUTER)){
 		//mark unmarked box in the row
@@ -118,6 +167,9 @@ void moveComputer(){
 			for(j=0;j<3;j++){
 				if(board[i][j]==UNSET){
 					board[i][j]=COMPUTER;
+					posi=i;
+					posj=j;
+
 				}
 			}
 		}
@@ -127,6 +179,9 @@ void moveComputer(){
 			for(i=0;i<3;i++){
 				if(board[i][j]==UNSET){
 					board[i][j]=COMPUTER;
+					posi=i;
+					posj=j;
+
 				}
 
 			}
@@ -136,6 +191,9 @@ void moveComputer(){
 			for(i=0;i<3;i++){
 				if(board[i][i]==UNSET){
 					board[i][i]=COMPUTER;
+					posi=i;
+					posj=i;
+
 				}
 
 			}
@@ -144,7 +202,10 @@ void moveComputer(){
 			//mark unmarked box in the  anti-diagonal
 			for(i=0;i<3;i++){
 				if(board[i][2-i]==UNSET){
-					board[i][i]=COMPUTER;
+					board[i][2-i]=COMPUTER;
+					posi=i;
+					posj=2-i;
+
 				}
             }
         }
@@ -152,66 +213,138 @@ void moveComputer(){
     }
     
 	else if(board[1][1]==UNSET){
-            board[1][1]=1;
-	}
-	else{
+        board[1][1]=COMPUTER;
+        posi=1;
+		posj=1;
 
+	}
+	else if(board[0][0]==UNSET){
+		board[0][0]=COMPUTER;
+		posi=0;
+		posj=0;
 
 	}
-    
-    int win_lose=checkwin(COMPUTER);
-    if(win_lose){
-        printf("you lose");
+	else if(board[0][2]==UNSET){
+		board[0][2]=COMPUTER;
+		posi=0;
+		posj=2;
+	}
+	else if(board[2][0]==UNSET){
+		board[2][0]=COMPUTER;
+		posi=2;
+		posj=0;
+
+	}
+	else if(board[2][2]==UNSET){
+		board[2][2]=COMPUTER;
+		posi=2;
+		posj=2;
+	}
+    else{
+    	for(i=0;i<2;i++){
+    		for(j=0;j<2;j++){
+    			board[i][j]=COMPUTER;
+    			posi=i;
+				posj=j;
+
+    		}
+    	}
+
     }
+    printf("move :%d %d",posi,posj);
 }
 
+
+void movePlayer(){
+	int posi,posj;
+	printf("enter indexes:");
+	scanf("%d%d",&posi,&posj);
+	printf("move :%d %d",posi,posj);
+}
 
                     
 int main(){
 
-	int counter=0,i,j;
+	int i,j,result;
 	char opt='y';
 
 	while(opt=='y'){
-        //status 0 if game going on else 1
-        int status=0;
-		//set all boxes as 0. 1 set to denote the computer and 2 to denote the player
+        int counter=0;
+        
+		 //status 0 if game going on else 1
+		int status=0;
+       
+        while(counter<9||status==0){
 
-		for(int i=0;i<3;i++){
-			for(int j=0;j<3;j++)
-				board[i][j]=0;
 
-		}
+        
+			//set all boxes as 0. 1 set to denote the computer and 2 to denote the player
 
-		//computer and player alternatively start the game
+			for( i=0;i<3;i++){
+				for(j=0;j<3;j++)
+					board[i][j]=0;
 
-		if(counter%2==0){
-			//status denotes the game isnt over yet.
-			while(status==0){
-
-				//computer makes move first. then player. checks for win after each move
-				moveComputer();
-				checkwin(COMPUTER);
-				movePlayer();
-				checkwin(USER);
-			}
-		}
-		else{
-			//player first then computer. checks for win after each move
-			while(status==0){
-				movePlayer();
-				checkwin(USER);
-				moveComputer();
-				checkwin(COMPUTER);
-				
 			}
 
+			//computer and player alternatively start the game
+
+			if(counter%2==0){
+				//status denotes the game isnt over yet.
+				while(status==0){
+
+					//computer makes move first. then player. checks for win after each move
+					moveComputer();
+					result=checkwin(COMPUTER);
+					if(result==1){
+						printf("you lose");
+						status=1;
+						break;
+					}
+					movePlayer();
+					result=checkwin(USER);
+					if(result==1){
+						printf("you win");
+						status=1;
+						break;
+					}
+				}
+			}
+			else{
+				//player first then computer. checks for win after each move
+				while(status==0){
+					movePlayer();
+					result=checkwin(USER);
+					if(result==1){
+						printf("you win");
+						status=1;
+						break;
+					}
+					moveComputer();
+					result=checkwin(COMPUTER);
+					if(result==1){
+						printf("you lose");
+						status=1;
+						break;
+					}
+					
+				}
+
+			}
+			if(counter==9){
+				printf("its a tie");
+			}
+
 		}
-		printf("play again?(y/n)");
+
+	printf("play again?(y/n)");
 		scanf("%c",&opt);
 		counter++;
-
 	}
 
 	return 0;
 }
+
+
+
+//issue
+//counter 9 =2*9=18
