@@ -83,13 +83,12 @@ int checkwin(int mark){
 
 
 
-//this function is to find out if any of the rows , columns or diagonals have 2 boxes marked by computer or player
-//blocked(which player sending request )
-int blocked(int mark){
-    int i,count,j;
-	//p[0] denote row/coloumn  p[1] to denote row or coloumn number
-	
-	//checking if any row has 2 marked boxes. if yes then it has to be blocked
+//to make move on behalf of the computer
+int  moveComputer(int mark){
+    
+    int i,j,posi,posj,count;
+	//need to block
+
 	for(i=0;i<3;i++){
 		count=0;
 		for(j=0;j<3;j++){
@@ -100,10 +99,14 @@ int blocked(int mark){
 		// row has 2 marked boxes
 		if(count==2){
 
-			p[0]=ROW;
-			p[1]=i;
-				printf("row problem %d",i);
-			return 1;
+			for(j=0;j<3;j++){
+				if(board[i][j]==UNSET){
+					board[i][j]=COMPUTER;
+					return 1;
+				}
+
+			}
+			
 
 		}
 			
@@ -120,10 +123,14 @@ int blocked(int mark){
 		}
 		// coloumn has 2 marked boxes
 		if(count==2){
-			p[0]=COLOUMN;
-			p[1]=j;
-			printf("\ncoloumn problem %d",j);
-			return 1;
+			for(i=0;i<3;i++){
+				if(board[i][j]==UNSET){
+					board[i][j]=COMPUTER;
+					return 1;
+				}
+
+			}
+			
 	
 		}
 
@@ -135,9 +142,13 @@ int blocked(int mark){
 			count++;
 	}
 	if(count==2){
-		p[0]=DIAGONAL;
-		printf("\ndiagonal problem" );
-		return 1;
+		for(i=0;i<3;i++){
+			if(board[i][i]==UNSET){
+				board[i][i]=COMPUTER;
+				return 1;
+			}
+		}
+		
 	
 	}
 
@@ -148,115 +159,54 @@ int blocked(int mark){
 			count++;
 	}
 	if(count==2){
-			p[0]=OPP_DIAGONAL;
-			printf("\nanti-diagonal problem");
-			return 1;
-	
-		}
-
-	return 0;
-}
-
-
-//to make move on behalf of the computer
-void moveComputer(){
-    
-    int i,j,posi,posj;
-	//need to block
-	if(blocked(USER)>0){
-		printf("\nblock");
-		//mark unmarked box in the row
-		if(p[0]==ROW){
-			p[1]=i;
-			for(j=0;j<3;j++){
-				if(board[i][j]==UNSET){
-					board[i][j]=COMPUTER;
-					posi=i;
-					posj=j;
-
-				}
-			}
-		}
-		else if(p[0]==COLOUMN){
-			//mark unmarked box in the coloumn
-			p[1]=j;
-			for(i=0;i<3;i++){
-				if(board[i][j]==UNSET){
-					board[i][j]=COMPUTER;
-					posi=i;
-					posj=j;
-
-				}
-
-			}
-		}
-		else if(p[0]==DIAGONAL){
-			//mark unmarked box in the diagonal
-			for(i=0;i<3;i++){
-				if(board[i][i]==UNSET){
-					board[i][i]=COMPUTER;
-					posi=i;
-					posj=i;
-
-				}
-
-			}
-		}
-
-		else{
-			//mark unmarked box in the  anti-diagonal
 			for(i=0;i<3;i++){
 				if(board[i][2-i]==UNSET){
 					board[i][2-i]=COMPUTER;
-					posi=i;
-					posj=2-i;
-
+					return 1;
 				}
-            }
-        }
-        
-    }
+			}
+	
+		}
+
     
-	else if(board[1][1]==UNSET){
+	if(board[1][1]==UNSET){
         board[1][1]=COMPUTER;
-        posi=1;
-		posj=1;
+		return 1;
 
 	}
-	else if(board[0][0]==UNSET){
+
+	if(board[0][0]==UNSET){
 		board[0][0]=COMPUTER;
-		posi=0;
-		posj=0;
+		return 1;
 
 	}
-	else if(board[0][2]==UNSET){
+
+	if(board[0][2]==UNSET){
 		board[0][2]=COMPUTER;
-		posi=0;
-		posj=2;
+		return 1;
+
 	}
-	else if(board[2][0]==UNSET){
+	if(board[2][0]==UNSET){
 		board[2][0]=COMPUTER;
-		posi=2;
-		posj=0;
+		return 1;
 
 	}
-	else if(board[2][2]==UNSET){
+	if(board[2][2]==UNSET){
 		board[2][2]=COMPUTER;
-		posi=2;
-		posj=2;
+		return 1;
 	}
-    else{
-    	for(i=0;i<3;i++){
-    		for(j=0;j<3;j++){
-    			board[i][j]=COMPUTER;
-    			posi=i;
-				posj=j;
+	for(i=0;i<3;i++){
+		for(j=0;j<3;j++){
+			if(board[i][j]==UNSET){
+				board[i][j]=COMPUTER;
+				return 1;
+			}
+			
 
-    		}
-    	}
-
-    }
+		}
+	}
     printf("move :%d %d",posi,posj);
+    return 0;
 }
 
 
@@ -287,6 +237,7 @@ int checkEnd()
 int main(){
 
 	int i,j,result;
+    int moveStatus;
 	char opt='y';
 
 	while(opt=='y'){
@@ -315,7 +266,7 @@ int main(){
 				while(status==0){
 
 					//computer makes move first. then player. checks for win after each move
-					moveComputer();
+					moveStatus=moveComputer(USER);
 					result=checkwin(COMPUTER);
 					if(result==1){
 						printf("you lose");
@@ -367,7 +318,7 @@ int main(){
 
 						}
 					}
-					moveComputer();
+                    moveStatus=moveComputer(USER);
 					result=checkwin(COMPUTER);
 					if(result==1){
 						printf("\nyou lose");
