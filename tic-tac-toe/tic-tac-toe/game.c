@@ -318,8 +318,14 @@ void movePlayer(){
 	int posi,posj;
 	printf("\nenter indexes:");
 	scanf("%d%d",&posi,&posj);
-	printf("\nplayer move :%d %d",posi,posj);
-    board[posi][posj]=2;
+	if(board[posi][posj]==UNSET){
+
+		printf("\nplayer move :%d %d",posi,posj);
+		board[posi][posj]=USER;
+	}
+	else{
+		printf("select another");
+	}
 }
 
 int checkEnd()
