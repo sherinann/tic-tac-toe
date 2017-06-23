@@ -10,6 +10,7 @@
 		A85EA8921EF2821700266FEC /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A85EA8911EF2821700266FEC /* main.c */; };
 		A85EA89A1EF283EA00266FEC /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A85EA8991EF283EA00266FEC /* libSDL2-2.0.0.dylib */; };
 		A85EA89F1EF2EA2200266FEC /* interface.c in Sources */ = {isa = PBXBuildFile; fileRef = A85EA89E1EF2EA2200266FEC /* interface.c */; };
+		A866F9D51EF6D1F100C8E44B /* game.c in Sources */ = {isa = PBXBuildFile; fileRef = A866F9D41EF6D1F100C8E44B /* game.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,7 @@
 		A85EA8991EF283EA00266FEC /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../usr/local/Cellar/sdl2/2.0.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
 		A85EA89C1EF2E73E00266FEC /* interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
 		A85EA89E1EF2EA2200266FEC /* interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interface.c; sourceTree = "<group>"; };
+		A866F9D41EF6D1F100C8E44B /* game.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = game.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				A85EA8911EF2821700266FEC /* main.c */,
+				A866F9D41EF6D1F100C8E44B /* game.c */,
 				A85EA89C1EF2E73E00266FEC /* interface.h */,
 				A85EA89E1EF2EA2200266FEC /* interface.c */,
 			);
@@ -136,6 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A866F9D51EF6D1F100C8E44B /* game.c in Sources */,
 				A85EA8921EF2821700266FEC /* main.c in Sources */,
 				A85EA89F1EF2EA2200266FEC /* interface.c in Sources */,
 			);
