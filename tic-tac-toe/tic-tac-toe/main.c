@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include "interface.h"
+#include "game.h"
+
 
 
 #define true 1
@@ -122,6 +124,8 @@ int main(int argc, const char * argv[]) {
         
         
         SDL_UpdateWindowSurface(window);
+        
+        main_sec();
     }
     
     SDL_FreeSurface(headSurface);

@@ -87,7 +87,7 @@ int checkwin(int mark){
 
 
 
-int checkCompAboutTowin(mark){
+int checkCompAboutTowin(int mark){
 	int i,j,count;
 	for(i=0;i<3;i++){
 		count=0;
@@ -173,7 +173,7 @@ for(j=0;j<3;j++){
 //to make move on behalf of the computer
 int  moveComputer(int mark){
     
-    int i,j,posi,posj,count,winStatus;
+    int i,j,count,winStatus;
 
 	//need to block
 
@@ -344,7 +344,7 @@ int checkEnd()
 }
 
                     
-int main(){
+void main_sec(){
 
 	int i,j,result;
     int moveStatus;
@@ -466,5 +466,5 @@ if(endResult==1){
 		counter++;
 	}
 
-	return 0;
+
 }
