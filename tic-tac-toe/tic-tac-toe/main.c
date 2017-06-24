@@ -16,21 +16,24 @@
 #define true 1
 #define false 0
 
-const int WIDTH=1000,HEIGHT=1000;
+const int WIDTH=750,HEIGHT=750;
 
 int quit=false;
 
+
+
 int main(int argc, const char * argv[]) {
     
-   
     
-    SDL_Surface* playSurface= NULL;
+    SDL_Surface* xSurface=NULL;
+    SDL_Surface* circleSurface=NULL;
+   // SDL_Surface* playSurface= NULL;
     SDL_Surface* windowSurface =NULL;
-    SDL_Surface* quitSurface= NULL;
-    SDL_Surface* headSurface= NULL;
+   // SDL_Surface* quitSurface= NULL;
+    //SDL_Surface* headSurface= NULL;
     SDL_Surface* boardSurface= NULL;
     
-    SDL_Rect DestPlay;
+    /*SDL_Rect DestPlay;
     
     DestPlay.x = 750;
     DestPlay.y = 300;
@@ -47,16 +50,16 @@ int main(int argc, const char * argv[]) {
     DestHead.x = 5;
     DestHead.y = 10;
     DestHead.w = 100;
-    DestHead.h = 100;
+    DestHead.h = 100;*/
 
     
     
     SDL_Rect DestBoard;
     
-    DestBoard.x = 50;
-    DestBoard.y = 90;
-    DestBoard.w = 300;
-    DestBoard.h=400;
+    DestBoard.x = 0;
+    DestBoard.y = 0;
+    //DestBoard.w = 300;
+    //DestBoard.h=400;
     
     
    // SDL_Rect Destnew;
@@ -65,7 +68,14 @@ int main(int argc, const char * argv[]) {
     //DestBoard.y = 10;
     
     
+    SDL_Rect DestCircle;
+    DestCircle.x=0;
+    DestCircle.y=0;
     
+    
+    SDL_Rect DestX;
+    DestX.x=250;
+    DestX.y=0;
     
     if( SDL_Init(SDL_INIT_EVERYTHING)<0){
         printf("error %s",SDL_GetError());
@@ -84,15 +94,17 @@ int main(int argc, const char * argv[]) {
     
     
     
-    headSurface=initialise("tictactoe.bmp");
+    //headSurface=initialise("tictactoe.bmp");
     
     boardSurface=initialise("board.bmp");
     
-    playSurface=initialise("play.bmp");
+    //playSurface=initialise("play.bmp");
     
-    quitSurface=initialise("quit.bmp");
+    //quitSurface=initialise("quit.bmp");
     
+    circleSurface=initialise("c15.bmp");
     
+    xSurface=initialise("x3.bmp");
     
     
     
@@ -109,36 +121,51 @@ int main(int argc, const char * argv[]) {
         }
         
         
-        //SDL_BlitScaled(headSurface,NULL,windowSurface,&Destnew);
+        SDL_BlitScaled(circleSurface,NULL,boardSurface,&DestCircle);
         
-        SDL_BlitSurface(headSurface,NULL,windowSurface,&DestHead);
-        
-        
-        SDL_BlitSurface(playSurface,NULL,windowSurface,&DestPlay);
+        //SDL_BlitSurface(headSurface,NULL,windowSurface,&DestHead);
         
         
-        SDL_BlitSurface(quitSurface,NULL,windowSurface,&DestQuit);
+        //SDL_BlitSurface(playSurface,NULL,windowSurface,&DestPlay);
+        
+        
+        //SDL_BlitSurface(quitSurface,NULL,windowSurface,&DestQuit);
+        
+        SDL_BlitSurface(circleSurface,NULL,boardSurface,&DestCircle);
         
         
         SDL_BlitSurface(boardSurface,NULL,windowSurface,&DestBoard);
         
         
+        SDL_BlitSurface(xSurface,NULL,boardSurface,&DestX);
+        
+        int x,y;
         SDL_UpdateWindowSurface(window);
         
-        main_sec();
+        if(SDL_MOUSEBUTTONDOWN && SDL_GetMouseState(&x,&y)){
+            if(x>0&& y>0){
+                main_sec();
+            }
+        }
+        
+
     }
     
-    SDL_FreeSurface(headSurface);
-    SDL_FreeSurface(playSurface);
+    //SDL_FreeSurface(headSurface);
+    //SDL_FreeSurface(playSurface);
     SDL_FreeSurface(windowSurface);
-    SDL_FreeSurface(quitSurface);
+    //SDL_FreeSurface(quitSurface);
     SDL_FreeSurface(boardSurface);
+    SDL_FreeSurface(circleSurface);
+    SDL_FreeSurface(xSurface);
     
-    playSurface=NULL;
+    //playSurface=NULL;
     windowSurface=NULL;
-    quitSurface=NULL;
-    headSurface=NULL;
+    //quitSurface=NULL;
+    //headSurface=NULL;
     boardSurface=NULL;
+    circleSurface=NULL;
+    xSurface=NULL;
     
     
     SDL_DestroyWindow(window);
