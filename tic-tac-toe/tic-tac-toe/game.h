@@ -19,3 +19,5 @@ int checkCompAboutToWin(int);
 int moveComputer(int);
 void movePlayer();
 void checkEnd();
+
+void setup();

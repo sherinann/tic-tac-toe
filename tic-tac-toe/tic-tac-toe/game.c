@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <SDL2/SDL.h>
+
 
 
 //denote the user and computer
@@ -22,6 +26,24 @@ enum location{
 
 int board[3][3];
 int p[2];
+
+
+
+void position(int mark,int i, int j){
+    int x,y;
+            x= 250*i;
+            y=250*j;
+      
+    
+    if(mark==COMPUTER){
+        
+    }
+    else{
+        display(x,y);
+    }
+    
+}
+
 
 
 void printMove(int posi,int posj){
@@ -102,6 +124,8 @@ int checkCompAboutTowin(int mark){
 				if(board[i][j]==UNSET){
 					board[i][j]=mark;
 						printMove(i,j);
+                    position(COMPUTER,i,j);
+                    
 					return 1;
 					}
 
@@ -124,6 +148,7 @@ for(j=0;j<3;j++){
 				if(board[i][j]==UNSET){
 					board[i][j]=COMPUTER;
 						printMove(i,j);
+                        position(COMPUTER,i,j);
 				return 1;
 				}
 				
@@ -143,6 +168,7 @@ for(j=0;j<3;j++){
 			if(board[i][i]==UNSET){
 				board[i][i]=COMPUTER;
 					printMove(i,i);
+                    position(COMPUTER,i,i);
 				return 1;
 			}
 		}
@@ -160,6 +186,7 @@ for(j=0;j<3;j++){
 			if(board[i][2-i]==UNSET){
 				board[i][2-i]=COMPUTER;
 					printMove(i,2-i);
+                    position(COMPUTER,i,2-i);
 				return 1;
 			}
 		}
@@ -197,6 +224,7 @@ if(winStatus){
 				if(board[i][j]==UNSET){
 					board[i][j]=COMPUTER;
 					printMove(i,j);
+                        position(COMPUTER,i,j);
 					return 1;
 				}
 
@@ -222,6 +250,7 @@ if(winStatus){
 				if(board[i][j]==UNSET){
 					board[i][j]=COMPUTER;
 					printMove(i,j);
+                        position(COMPUTER,i,j);
 					return 1;
 				}
 
@@ -242,6 +271,7 @@ if(winStatus){
 			if(board[i][i]==UNSET){
 				board[i][i]=COMPUTER;
 				printMove(i,i);
+                    position(COMPUTER,i,i);
 				return 1;
 			}
 		}
@@ -260,6 +290,7 @@ if(winStatus){
 				if(board[i][2-i]==UNSET){
 					board[i][2-i]=COMPUTER;
 					printMove(i,2-i);
+                        position(COMPUTER,i,2-i);
 					return 1;
 				}
 			}
@@ -270,6 +301,7 @@ if(winStatus){
 	if(board[1][1]==UNSET){
         board[1][1]=COMPUTER;
 		printMove(1,1);
+            position(COMPUTER,1,1);
 		return 1;
 
 	}
@@ -277,6 +309,7 @@ if(winStatus){
 	if(board[0][0]==UNSET){
 		board[0][0]=COMPUTER;
 		printMove(0,0);
+            position(COMPUTER,0,0);
 		return 1;
 
 	}
@@ -284,18 +317,21 @@ if(winStatus){
 	if(board[0][2]==UNSET){
 		board[0][2]=COMPUTER;
 		printMove(0,2);
+            position(COMPUTER,0,2);
 		return 1;
 
 	}
 	if(board[2][0]==UNSET){
 		board[2][0]=COMPUTER;
 		printMove(2,0);
+            position(COMPUTER,2,0);
 		return 1;
 
 	}
 	if(board[2][2]==UNSET){
 		board[2][2]=COMPUTER;
 		printMove(2,2);
+            position(COMPUTER,2,2);
 		return 1;
 	}
 	for(i=0;i<3;i++){
@@ -303,6 +339,7 @@ if(winStatus){
 			if(board[i][j]==UNSET){
 				board[i][j]=COMPUTER;
 				printMove(i,j);
+                    position(COMPUTER,i,j);
 				return 1;
 			}
 			
@@ -370,8 +407,12 @@ void main_sec(){
 			}
 
 			//computer and player alternatively start the game
-
-			if(counter%2==0){
+      
+        srand(time(NULL));
+        int no=rand();
+        counter=no%2;
+        
+			if(counter==0){
 				//status denotes the game isnt over yet.
 				while(status==0){
 
