@@ -10,17 +10,47 @@
 #include <SDL2/SDL.h>
 #include "interface.h"
 #include "game.h"
-
+#include <stdlib.h>
+#include <time.h>
 
 
 #define true 1
 #define false 0
 
+//denote the user and computer
+enum status{
+    UNSET,
+    COMPUTER,
+    USER
+};
+//#define COMPUTER 1
+//#define USER 2
+//define ROW 1
+//#define COLOUMN 2
+
+//to denote whether we are checking for win or near win status in rows, coloums , diagonal or left diagonal
+enum location{
+    ROW=1,
+    COLOUMN,
+    DIAGONAL,
+    OPP_DIAGONAL
+};
+
+
 const int WIDTH=750,HEIGHT=750;
 
 int quit=false;
 
-    SDL_Surface* boardSurface= NULL;
+
+
+
+SDL_Surface* boardSurface;
+SDL_Surface* windowSurface;
+
+SDL_Window *window;
+
+
+
 
 void display(int x,int y, int mark){
     SDL_Rect Destpos;
@@ -28,27 +58,49 @@ void display(int x,int y, int mark){
     Destpos.y=y;
     if(mark==1){
         SDL_Surface* xSurface=NULL;
-            xSurface=initialise("x3.bmp");
+        xSurface=initialise("x3.bmp");
         
-        SDL_BlitSurface(xSurface,NULL,boardSurface,&Destpos);
+        SDL_BlitSurface(xSurface,NULL, boardSurface,&Destpos);
     }
     else{
-          SDL_Surface* circleSurface=NULL;
+        SDL_Surface* circleSurface=NULL;
         
         circleSurface=initialise("c15.bmp");
         SDL_BlitSurface(circleSurface,NULL,boardSurface,&Destpos);
     }
+    
+    
+    SDL_UpdateWindowSurface(window);
+    
+    
 }
+
+
+void position(int mark,int i, int j){
+    int x=250*i;
+    int y=250*j;
+        display(x,y,mark);
+    
+    
+}
+
+
+
+
+
 
 
 
 int main(int argc, const char * argv[]) {
 
     
-
+    
+    
+    SDL_Surface* boardSurface=NULL;
+    SDL_Surface* windowSurface=NULL;
   
    // SDL_Surface* playSurface= NULL;
-    SDL_Surface* windowSurface =NULL;
+   
    // SDL_Surface* quitSurface= NULL;
     //SDL_Surface* headSurface= NULL;
 
@@ -94,6 +146,7 @@ int main(int argc, const char * argv[]) {
     }
     
     SDL_Window *window= SDL_CreateWindow("Tic Tac Toe", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+
     
     windowSurface= SDL_GetWindowSurface(window);
     
@@ -125,8 +178,8 @@ int main(int argc, const char * argv[]) {
         
         if(SDL_PollEvent(& windowEvent)){
             
-            if(SDL_QUIT==windowEvent.type){
-                break;
+           if(SDL_QUIT==windowEvent.type){
+               break;
             }
         
         }
@@ -149,23 +202,69 @@ int main(int argc, const char * argv[]) {
         
         
         
-        int x,y;
+       
         SDL_UpdateWindowSurface(window);
         
         
-        setup();
-        
-        
-        if(SDL_MOUSEBUTTONDOWN && SDL_GetMouseState(&x,&y)){
-            if(x>0&& y>0){
-                main_sec();
-            }
-        }
         
         
        
+        int i,j,board[3][3],counter,location ,choiceP ,returnStatus[3];
+                
+                //status 0 if game going on else 1
+                int status=0;
+
         
-    }
+                //while(counter<9||status==0){
+                
+                
+                
+                //set all boxes as 0. 1 set to denote the computer and 2 to denote the player
+                
+                for( i=0;i<3;i++){
+                    for(j=0;j<3;j++)
+                        board[i][j]=0;
+                    
+                }
+                
+                //computer and player alternatively start the game
+                
+                srand((unsigned int)(time(NULL)));
+                int no=rand();
+            counter=no%2;;
+        
+        
+       // while(1){
+            if(counter==0){
+                location=moveComputer(returnStatus);
+                if(location==0){
+                    status=1; 
+                    break;
+                }
+                else{
+                    position( COMPUTER,returnStatus[1], returnStatus[2]);
+                }
+                counter++;
+                status=checkEnd();
+            }
+            else{
+                choiceP=movePlayer();
+                if(choiceP==-1){
+                    status=1;
+                    break;
+                }
+                else{
+                    playerChoice(choiceP);
+                }
+                counter--;
+                status=checkEnd();
+            }
+           
+            
+        //}
+       
+        
+   }
     
     //SDL_FreeSurface(headSurface);
     //SDL_FreeSurface(playSurface);

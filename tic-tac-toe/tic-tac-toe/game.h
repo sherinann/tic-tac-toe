@@ -15,9 +15,8 @@
 int main_sec();
 void printMove(int ,int);
 int checkwin(int);
-int checkCompAboutToWin(int);
-int moveComputer(int);
-void movePlayer();
-void checkEnd();
+void playerChoice(int);
 
-void setup();
+int moveComputer(int a[]);
+int movePlayer();
+int checkEnd();
