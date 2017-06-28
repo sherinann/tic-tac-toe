@@ -14,6 +14,12 @@
 #include <time.h>
 
 
+struct entity{
+    int value;
+    SDL_Rect DestEntity;
+
+};
+
 #define true 1
 #define false 0
 
@@ -41,27 +47,23 @@ const int WIDTH=750,HEIGHT=750;
 
 int quit=false;
 
+ int no=0;
+
 
 SDL_Surface* boardSurface;
 SDL_Surface* windowSurface;
 
 SDL_Window *window;
 
-void display(int x,int y, int mark){
-    SDL_Rect Destpos;
-    Destpos.x=x;
-    Destpos.y=y;
+void displaySet(struct entity e,int x,int y, int mark){
+   
+    e.DestEntity.x=x;
+    e.DestEntity.y=y;
     if(mark==1){
-        SDL_Surface* xSurface=NULL;
-        xSurface=initialise("x3.bmp");
-        
-        SDL_BlitSurface(xSurface,NULL, windowSurface,&Destpos);
+        e.value=COMPUTER;
     }
     else{
-        SDL_Surface* circleSurface=NULL;
-        
-        circleSurface=initialise("c15.bmp");
-        SDL_BlitSurface(circleSurface,NULL,windowSurface,&Destpos);
+        e.value=USER;
     }
     
     
@@ -70,7 +72,7 @@ void display(int x,int y, int mark){
     
 }
 
-void playerChoice(int choice){
+void playerChoice(struct entity e,int choice){
     
     //check for availability
     //
@@ -84,38 +86,38 @@ void playerChoice(int choice){
     switch (choice) {
         case 0:
             
-            display(USER,0*250, 0*250);
+            displaySet(e,0*250, 0*250,USER);
             break;
         case 1:
-             display(USER,0*250, 1*250);
+             displaySet(e,0*250, 1*250,USER);
         
             break;
         case 2:
-             display(USER,0*250, 2*250);
+             displaySet(e,0*250, 2*250,USER);
          
             break;
         case 3:
-             display(USER,1*250, 0*250);
+             displaySet(e,1*250, 0*250,USER);
         
             break;
         case 4:
-             display(USER,1*250, 1*250);
+             displaySet(e,1*250, 1*250,USER);
           
             break;
         case 5:
-             display(USER,1*250, 2*250);
+             displaySet(e,1*250, 2*250,USER);
        
             break;
         case 6:
-             display(USER,2*250, 0*250);
+             displaySet(e,2*250, 0*250,USER);
            
             break;
         case 7:
-             display(USER,2*250, 1*250);
+             displaySet(e,2*250, 1*250,USER);
          
             break;
         case 8:
-             display(USER,2*250, 2*250);
+             displaySet(e,2*250, 2*250,USER);
         
             break;
             
@@ -138,11 +140,17 @@ void playerChoice(int choice){
 }
 
 
+
+
 int main(int argc, const char * argv[]) {
+    
+    struct entity e[9];
+   
     
     SDL_Surface* boardSurface=NULL;
     SDL_Surface* windowSurface=NULL;
-  
+    SDL_Surface* xSurface=NULL;
+    SDL_Surface* circleSurface=NULL;
    // SDL_Surface* playSurface= NULL;
    
    // SDL_Surface* quitSurface= NULL;
@@ -187,8 +195,12 @@ int main(int argc, const char * argv[]) {
 
     
     //headSurface=initialise("tictactoe.bmp");
-    
+
     boardSurface=initialise("board.bmp");
+    
+    xSurface=initialise("x3.bmp");
+    
+    circleSurface= initialise("c15.bmp");
     
     //playSurface=initialise("play.bmp");
     
@@ -201,9 +213,9 @@ int main(int argc, const char * argv[]) {
         
         if(SDL_PollEvent(& windowEvent)){
             
-          // if(SDL_QUIT==windowEvent.type){
-            //   break;
-           // }
+        if(SDL_QUIT==windowEvent.type){
+              break;
+        }
         
         }
         //SDL_BlitSurface(headSurface,NULL,windowSurface,&DestHead);
@@ -211,6 +223,20 @@ int main(int argc, const char * argv[]) {
         //SDL_BlitSurface(quitSurface,NULL,windowSurface,&DestQuit);
         
         SDL_BlitSurface(boardSurface,NULL,windowSurface,&DestBoard);
+       
+       for(int i=0;i<=9;i++){
+           
+           if(e[i].value==COMPUTER){
+                     SDL_BlitSurface(circleSurface,NULL,windowSurface,&e[i].DestEntity);
+           }
+           else if(e[i].value==USER){
+          
+               SDL_BlitSurface(xSurface,NULL,windowSurface,&e[i].DestEntity);
+           }
+           else
+               continue;
+       }
+       
        
         SDL_UpdateWindowSurface(window);
        
@@ -229,21 +255,27 @@ int main(int argc, const char * argv[]) {
                 //computer and player alternatively start the game
                 
                 srand((unsigned int)(time(NULL)));
-                int no=rand();
-            counter=no%2;;
+                int num=rand();
+            counter=num%2;;
         
-        
+       while(status==0){
       
             if(counter==0){
                 printf("1\n");
                 location=moveComputer(returnStatus);
+                printf("\nlocation %d",location);
                 if(location==0){
                     status=1;
                     break;
                 }
                 else{
+                  
                     printf("%d%d\n",returnStatus[1],returnStatus[2]);
-                    display( COMPUTER,returnStatus[1]*250, returnStatus[2]*250);
+                    
+                    
+                    displaySet(e[no],returnStatus[1]*250, returnStatus[2]*250,COMPUTER);
+                    no++;
+                    
                     
                 }
                 counter++;
@@ -257,13 +289,18 @@ int main(int argc, const char * argv[]) {
                     break;
                 }
                 else{
-                    playerChoice(choiceP);
-                    
+                    playerChoice(e[no],choiceP);
+                    no++;
                 }
-                counter--;
+               
                 status=checkEnd();
+                
+                
+                
+                
             }
-            
+           
+       }
        
        
    }
