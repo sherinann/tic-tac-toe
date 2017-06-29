@@ -88,34 +88,43 @@ void getpos(int x, int y){
     if(x==0){
         if(y==0){
             set(COMPUTER,0);
+            return;
         }
         else if(y==1){
             set(COMPUTER,1);
+            return;
         }
         else{
             set(COMPUTER,2);
+            return;
         }
     }
     else if(x==1){
         if(y==0){
             set(COMPUTER,4);
+            return;
         }
         else if(y==1){
             set(COMPUTER,4);
+            return;
         }
         else{
             set(COMPUTER,5);
+            return;
         }
     }
     else{
         if(y==0){
             set(COMPUTER,6);
+            return;
         }
         else if(y==1){
             set(COMPUTER,7);
+            return;
         }
         else{
             set(COMPUTER,8);
+            return;
         }
     }
     
@@ -135,6 +144,7 @@ void computer(){
         printf("inside");
         
         set(COMPUTER,4);
+        return;
     }
     
   
