@@ -127,67 +127,7 @@ int main(int argc,const char * argv[]){
         int a,b;
          if(SDL_MOUSEBUTTONDOWN && SDL_GetMouseState(&a,&b)){
              
-             printf("\nmain after1");
-             for(int i=0;i<3;i++){
-                 printf("\n");
-                 for(int j=0;j<3;j++){
-                     printf("%d ",board[i][j]);
-                 }
-             }
-             if(a>0 && a<=250){
-                 if(b>0 && b<=250){
-                      printf("\ncalled 0");
-                     set(USER,0,board);
-                    
-                 }
-                 else if(b>250 && b<=500){
-                       printf("\ncalled 1");
-                      set(USER,1,board);
-                   
-                 }
-                 else{
-                      printf("\ncalled 2");
-                      set(USER,2,board);
-                    
-                     
-                 }
-                 
-             }
-             else if(a>250 && a<=500){
-                 if(b>0 && b<=250){
-                      printf("\ncalled 3");
-                     set(USER,3,board);
-                    
-                 }
-                 else if(b>250 && b<=500){
-                     printf("\ncalled 4");
-                     set(USER,4,board);
-                     
-                 }
-                 else{
-                        printf("\ncalled 5");
-                     set(USER,5,board);
-                  
-                     
-                 }
-             }
-             else{
-                 if(b>0 && b<=250){
-                      printf("\ncalled 6");
-                     set(USER,6,board);
-                    
-                 }
-                 else if(b>250 && b<=500){
-                            printf("\ncalled 7");
-                     set(USER,7,board);
-              
-                 }
-                 else{
-                     printf("\ncalled 8");
-                     set(USER,8,board);
-                     
-                 }
-                 
+                             
              }
               lastTime = SDL_GetTicks();
              
