@@ -14,6 +14,8 @@ int HEIGHT= 750;
 int  WIDTH =750;
 
 
+int xvalue[]={0,1,2,0,1,2,0,1,2,};
+int yvalue[]={0,0,0,1,1,1,2,2,2,};
 
 double lastTime;
 
@@ -27,14 +29,66 @@ double frameCounter = 0;
 struct tile{
     int value;
     SDL_Rect DestEntity;
-}e[8];
+}e[9];
 
+void set(int mark, int grid){
+    
+    e[grid].value=mark;
+    e[grid].DestEntity.x=xvalue[grid]*250;
+     e[grid].DestEntity.y=yvalue[grid]*250;
+    
+}
+
+
+void playerMove(int x,int y){
+    if(y>0 && y<=250){
+        
+        if(x>0 && x<=250){
+            set(USER,0);
+            
+        }
+        else if(x>250 && x<=500){
+              set(USER,1);
+        }
+        else{
+              set(USER,2);
+        }
+    }
+    
+    else if(y>250 && y<=500){
+        
+        if(x>0 && x<=250){
+              set(USER,3);
+        }
+        else if(x>250 && x<=500){
+              set(USER,4);
+        }
+        else{
+              set(USER,5);
+        }
+    }
+    
+    else{
+        
+        if(x>0 && x<=250){
+              set(USER,6);
+        }
+        else if(x>250 && x<=500){
+              set(USER,7);
+        }
+        else{
+           
+              set(USER,8);
+        }
+    
+        
+    }
+    
+}
 
 
 
 int main(int argc,const char * argv[]){
-    
-    int board[3][3];
     
     
     SDL_Surface* window=NULL;
@@ -71,18 +125,7 @@ int main(int argc,const char * argv[]){
     //int counter=no%9;
     
     
-    for(int i=0;i<3;i++){
-        for(int j=0;j<3;j++){
-            board[i][j]=UNSET;
-        }
-    }
-    
-    printf("\nmain before");
-    for(int i=0;i<3;i++){
-        for(int j=0;j<3;j++){
-            printf("%d",board[i][j]);
-        }
-    }
+   
     
     
     while(1)
@@ -110,7 +153,6 @@ int main(int argc,const char * argv[]){
         
         
         for(int i=0;i<9;i++){
-            printf("e %d ",e[i].value);
             if(e[i].value==USER){
                 SDL_BlitSurface(circle,NULL,window,&e[i].DestEntity);
             }
@@ -122,45 +164,52 @@ int main(int argc,const char * argv[]){
                 continue;
         }
         
+        
         SDL_UpdateWindowSurface(newWindow);
         
         int a,b;
          if(SDL_MOUSEBUTTONDOWN && SDL_GetMouseState(&a,&b)){
+            playerMove(a,b);
+            lastTime = SDL_GetTicks();
              
-                             
              }
-              lastTime = SDL_GetTicks();
-             
-        
-         }
-        
         
         startTime = SDL_GetTicks();
         //printf("%f",startTime);
         passedTime = startTime - lastTime;
         //printf("%f",lastTime);
         //printf("\n%f",passedTime);
-         printf("\nmain after2");
-        for(int i=0;i<3;i++){
-            printf("\n");
-            for(int j=0;j<3;j++){
-                printf("%d ",board[i][j]);
-            }
-        }
-        printf("\n");
+        
+        
         
         if (lastTime>0 && passedTime>=100.0){
-            computer();
-            printf("\nsidhin");
-            for(int i=0;i<3;i++){
-                printf("\n");
-                for(int j=0;j<3;j++){
-                    printf("%d ",board[i][j]);
-                }
-            }
-
+            // computer();
             
         }
+
+    }
+    
+    //SDL_FreeSurface(headSurface);
+    //SDL_FreeSurface(playSurface);
+    SDL_FreeSurface(window);
+    //SDL_FreeSurface(quitSurface);
+    SDL_FreeSurface(boardSurface);
+    // SDL_FreeSurface(circleSurface);
+    //SDL_FreeSurface(xSurface);
+    
+    //playSurface=NULL;
+    window=NULL;
+    //quitSurface=NULL;
+    //headSurface=NULL;
+    boardSurface=NULL;
+    //circleSurface=NULL;
+    //xSurface=NULL;
+    
+    
+    SDL_DestroyWindow(newWindow);
+    SDL_Quit();
+    
+    return EXIT_SUCCESS;
         
         
     
@@ -168,4 +217,4 @@ int main(int argc,const char * argv[]){
     
     
     
-}
+
