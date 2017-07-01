@@ -9,7 +9,8 @@ enum {
     COMPUTER,
     USER,
     WIN_COMPUTER,
-    WIN_USER
+    WIN_USER,
+    TIE
 };
 
 int HEIGHT= 750;
@@ -34,13 +35,26 @@ struct tile{
 }e[9];
 
 
+void checkEnd(){
+    int i;
+    for(i=0;i<9;i++){
+        if(e[i].value==UNSET)
+            return;
+        
+    }
+    for(i=0;i<9;i++){
+        e[i].value=TIE;
+    }
+    return;
+}
+
 void Win(int mark){
     int i;
     for(i=0;i<9;i++){
         if(mark==COMPUTER)
-            e[i].value=3;
+            e[i].value=WIN_COMPUTER;
         else
-            e[i].value=4;
+            e[i].value=WIN_USER;
     }
 }
 
@@ -100,6 +114,8 @@ void checkWin(int mark){
         Win(mark);
         return;
     }
+    
+    checkEnd();
 
 
     return;
@@ -107,7 +123,6 @@ void checkWin(int mark){
 }
 
 void set(int mark, int grid){
-    printf("\nset  %d %d",mark,grid);
     e[grid].value=mark;
     e[grid].DestEntity.x=xvalue[grid]*250;
      e[grid].DestEntity.y=yvalue[grid]*250;
@@ -239,16 +254,12 @@ void playerMove(int x,int y){
         
         if(x>0 && x<=250){
             set(USER,0);
-            board[0][0]=USER;
-            
         }
         else if(x>250 && x<=500){
               set(USER,1);
-             board[0][1]=USER;
         }
         else{
               set(USER,2);
-             board[0][2]=USER;
         }
     }
     
@@ -256,15 +267,12 @@ void playerMove(int x,int y){
         
         if(x>0 && x<=250){
               set(USER,3);
-             board[1][0]=USER;
         }
         else if(x>250 && x<=500){
               set(USER,4);
-             board[1][1]=USER;
         }
         else{
               set(USER,5);
-             board[1][2]=USER;
         }
     }
     
@@ -272,16 +280,12 @@ void playerMove(int x,int y){
         
         if(x>0 && x<=250){
               set(USER,6);
-             board[2][0]=USER;
         }
         else if(x>250 && x<=500){
               set(USER,7);
-             board[2][1]=USER;
         }
         else{
-           
               set(USER,8);
-             board[2][2]=USER;
         }
     }
 }
@@ -358,17 +362,14 @@ void computer(){
     
     if(e[4].value==UNSET){
        set(COMPUTER,4);
-        board[1][1]=COMPUTER;
         return;
     }
      if(e[0].value==UNSET){
        set(COMPUTER,0);
-         board[0][0]=COMPUTER;
         return;
     }
     if(e[2].value==UNSET){
         set(COMPUTER,2);
-        board[0][2]=COMPUTER;
         return;
     }
     
@@ -388,7 +389,7 @@ void computer(){
 
 int main(int argc,const char * argv[]){
     
-    int i;
+
     
     SDL_Surface* window=NULL;
     SDL_Surface* boardSurface=NULL;
@@ -396,6 +397,7 @@ int main(int argc,const char * argv[]){
     SDL_Surface* circle=NULL;
      SDL_Surface* winComputer=NULL;
      SDL_Surface* winUser=NULL;
+    SDL_Surface* tie=NULL;
     
     
     SDL_Rect Destwinlose;
@@ -458,6 +460,7 @@ int main(int argc,const char * argv[]){
    
         winComputer=SDL_LoadBMP("lose.bmp");
         winUser=SDL_LoadBMP("win.bmp");
+        tie=SDL_LoadBMP("tie.bmp");
         
         for(int i=0;i<9;i++){
             if(e[i].value==WIN_COMPUTER){
@@ -467,6 +470,11 @@ int main(int argc,const char * argv[]){
             else if(e[i].value==WIN_USER){
                     SDL_BlitSurface(winUser,NULL,window,&Destwinlose);
                 break;
+            }
+            else if(e[i].value==TIE){
+                SDL_BlitSurface(tie,NULL,window,&Destwinlose);
+                break;
+
             }
              else if(e[i].value==USER){
                 SDL_BlitSurface(boardSurface,NULL,window,&Destboard);
@@ -511,16 +519,22 @@ int main(int argc,const char * argv[]){
     SDL_FreeSurface(window);
     //SDL_FreeSurface(quitSurface);
     SDL_FreeSurface(boardSurface);
-    // SDL_FreeSurface(circleSurface);
-    //SDL_FreeSurface(xSurface);
+    SDL_FreeSurface(circle);
+    SDL_FreeSurface(xSurface);
+    SDL_FreeSurface(winUser);
+    SDL_FreeSurface(winComputer);
+    SDL_FreeSurface(tie);
     
     //playSurface=NULL;
     window=NULL;
     //quitSurface=NULL;
     //headSurface=NULL;
     boardSurface=NULL;
-    //circleSurface=NULL;
-    //xSurface=NULL;
+    circle=NULL;
+    xSurface=NULL;
+    tie=NULL;
+    winUser=NULL;
+    winComputer=NULL;
     
     
     SDL_DestroyWindow(newWindow);
