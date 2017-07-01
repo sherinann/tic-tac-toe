@@ -1,1 +1,1 @@
-add_subdirectory (tic-tac-toe/tic-tac-toe)
+add_subdirectory (src/tic-tac-toe)

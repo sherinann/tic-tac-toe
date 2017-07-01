@@ -3,5 +3,5 @@ project(tic-tac-toe)
 
 set(CMAKE_C_STANDARD 99)
 
-add_subdirectory (tic-tac-toe/tic-tac-toe)
+add_subdirectory (tic-tac-toe/src)
 enable_testing()
