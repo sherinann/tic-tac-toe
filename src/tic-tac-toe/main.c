@@ -13,7 +13,7 @@ enum {
 int HEIGHT= 750;
 int  WIDTH =750;
 
-int board[3][3];
+
 
 double lastTime;
 
@@ -31,202 +31,10 @@ struct tile{
 
 
 
-void set(int mark,int position){
-    int i,j;
-    /*for(i=0;i<3;i++){
-        for(j=0;j<3;j++){
-            printf("%d",board[i][j]);
-        }
-    }*/
-    printf("position %d",position);
-    e[position].value=mark;
-    switch(position){
-        case 0: e[position].DestEntity.x=0*250;
-                e[position].DestEntity.y=0*250;
-                board[0][0]=mark;
-                break;
-        case 1: e[position].DestEntity.x=0*250;
-            e[position].DestEntity.y=1*250;
-            board[0][1]=mark;
-            break;
-        case 2: e[position].DestEntity.x=0*250;
-            e[position].DestEntity.y=2*250;
-            board[0][2]=mark;
-            break;
-        case 3: e[position].DestEntity.x=1*250;
-            e[position].DestEntity.y=0*250;
-            board[1][0]=mark;
-            break;
-        case 4: e[position].DestEntity.x=1*250;
-            e[position].DestEntity.y=1*250;
-            board[1][1]=mark;
-            break;
-        case 5: e[position].DestEntity.x=1*250;
-            e[position].DestEntity.y=2*250;
-            board[1][2]=mark;
-            break;
-        case 6: e[position].DestEntity.x=2*250;
-            e[position].DestEntity.y=0*250;
-            board[2][0]=mark;
-            break;
-        case 7: e[position].DestEntity.x=2*250;
-            e[position].DestEntity.y=1*250;
-            board[2][1]=mark;
-            break;
-        case 8: e[position].DestEntity.x=2*250;
-            e[position].DestEntity.y=2*250;
-            board[2][2]=mark;
-            break;
-
-    }
-  
-    
-}
-
-
-void getpos(int x, int y){
-    if(x==0){
-        if(y==0){
-            set(COMPUTER,0);
-            return;
-        }
-        else if(y==1){
-            set(COMPUTER,1);
-            return;
-        }
-        else{
-            set(COMPUTER,2);
-            return;
-        }
-    }
-    else if(x==1){
-        if(y==0){
-            set(COMPUTER,4);
-            return;
-        }
-        else if(y==1){
-            set(COMPUTER,4);
-            return;
-        }
-        else{
-            set(COMPUTER,5);
-            return;
-        }
-    }
-    else{
-        if(y==0){
-            set(COMPUTER,6);
-            return;
-        }
-        else if(y==1){
-            set(COMPUTER,7);
-            return;
-        }
-        else{
-            set(COMPUTER,8);
-            return;
-        }
-    }
-    
-}
-
-void computer(){
-      int i,j,count;
-    printf("\nfunction computer");
-    for(i=0;i<3;i++){
-        printf("\n");
-        for(j=0;j<3;j++){
-            printf("%d ",board[i][j]);
-        }
-    }
-    printf("\n");
-    if(board[1][1]==UNSET){
-        printf("inside");
-        
-        set(COMPUTER,4);
-        return;
-    }
-    
-  
-    //printf("here");
-    //checking for winning chances
-    
-    for(i=0;i<3;i++){
-        count=0;
-        for(j=0;j<3;j++){
-            if(board[i][j]==COMPUTER){
-                count++;
-            }
-            
-        }
-        if(count==2){
-            for(j=0;j<3;j++){
-                if(board[i][j]==UNSET){
-                    getpos(i,j);
-                    return;
-                }
-            }
-        }
-    }
-    
-    
-    for(j=0;j<3;j++){
-        count=0;
-        for(i=0;i<3;i++){
-            if(board[i][j]==COMPUTER){
-                count++;
-            }
-            
-        }
-        if(count==2){
-            for(i=0;i<3;i++){
-                if(board[i][j]==UNSET){
-                    getpos(i,j);
-                    return;
-                }
-            }
-        }
-    }
-
-    count=0;
-    for(i=0;i<3;i++){
-        if(board[i][i]==COMPUTER){
-            count++;
-        }
-    }
-    
-    if(count==2){
-        for(i=0;i<3;i++){
-            if(board[i][i]==UNSET){
-                getpos(i, i);
-                return;
-            }
-        }
-    }
-    
-    
-    count=0;
-    for(i=0;i<3;i++){
-        if(board[i][2-i]==COMPUTER){
-            count++;
-        }
-    }
-    
-    if(count==2){
-        for(i=0;i<3;i++){
-            if(board[i][2-i]==UNSET){
-                getpos(i, 2-i);
-                return;
-            }
-        }
-    }
-    
-   
-}
-
-
 
 int main(int argc,const char * argv[]){
+    
+    int board[3][3];
     
     
     SDL_Surface* window=NULL;
@@ -329,17 +137,17 @@ int main(int argc,const char * argv[]){
              if(a>0 && a<=250){
                  if(b>0 && b<=250){
                       printf("\ncalled 0");
-                     set(USER,0);
+                     set(USER,0,board);
                     
                  }
                  else if(b>250 && b<=500){
                        printf("\ncalled 1");
-                      set(USER,1);
+                      set(USER,1,board);
                    
                  }
                  else{
                       printf("\ncalled 2");
-                      set(USER,2);
+                      set(USER,2,board);
                     
                      
                  }
@@ -348,17 +156,17 @@ int main(int argc,const char * argv[]){
              else if(a>250 && a<=500){
                  if(b>0 && b<=250){
                       printf("\ncalled 3");
-                     set(USER,3);
+                     set(USER,3,board);
                     
                  }
                  else if(b>250 && b<=500){
                      printf("\ncalled 4");
-                     set(USER,4);
+                     set(USER,4,board);
                      
                  }
                  else{
                         printf("\ncalled 5");
-                     set(USER,5);
+                     set(USER,5,board);
                   
                      
                  }
@@ -366,17 +174,17 @@ int main(int argc,const char * argv[]){
              else{
                  if(b>0 && b<=250){
                       printf("\ncalled 6");
-                     set(USER,6);
+                     set(USER,6,board);
                     
                  }
                  else if(b>250 && b<=500){
                             printf("\ncalled 7");
-                     set(USER,7);
+                     set(USER,7,board);
               
                  }
                  else{
                      printf("\ncalled 8");
-                     set(USER,8);
+                     set(USER,8,board);
                      
                  }
                  
@@ -403,6 +211,15 @@ int main(int argc,const char * argv[]){
         
         if (lastTime>0 && passedTime>=100.0){
             computer();
+            printf("\nsidhin");
+            for(int i=0;i<3;i++){
+                printf("\n");
+                for(int j=0;j<3;j++){
+                    printf("%d ",board[i][j]);
+                }
+            }
+
+            
         }
         
         
