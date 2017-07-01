@@ -253,39 +253,66 @@ void playerMove(int x,int y){
     if(y>0 && y<=250){
         
         if(x>0 && x<=250){
-            set(USER,0);
+            if(e[0].value==UNSET){
+                set(USER,0);
+                lastTime = SDL_GetTicks();
+            }
         }
         else if(x>250 && x<=500){
+            if(e[1].value==UNSET){
               set(USER,1);
+                lastTime = SDL_GetTicks();
+            }
         }
         else{
+            if(e[2].value==UNSET){
               set(USER,2);
+                lastTime = SDL_GetTicks();
+            }
         }
     }
     
     else if(y>250 && y<=500){
         
         if(x>0 && x<=250){
+            if(e[3].value==UNSET){
               set(USER,3);
+                lastTime = SDL_GetTicks();
+            }
         }
         else if(x>250 && x<=500){
+            if(e[4].value==UNSET){
               set(USER,4);
+                lastTime = SDL_GetTicks();
+            }
         }
         else{
+            if(e[5].value==UNSET){
               set(USER,5);
+                lastTime = SDL_GetTicks();
+            }
         }
     }
     
     else{
         
         if(x>0 && x<=250){
+            if(e[6].value==UNSET){
               set(USER,6);
+                lastTime = SDL_GetTicks();
+            }
         }
         else if(x>250 && x<=500){
+            if(e[7].value==UNSET){
               set(USER,7);
+                lastTime = SDL_GetTicks();
+            }
         }
         else{
+            if(e[8].value==UNSET){
               set(USER,8);
+                lastTime = SDL_GetTicks();
+            }
         }
     }
 }
@@ -495,8 +522,7 @@ int main(int argc,const char * argv[]){
         int a,b;
          if(SDL_MOUSEBUTTONDOWN && SDL_GetMouseState(&a,&b)){
             playerMove(a,b);
-            lastTime = SDL_GetTicks();
-             
+          
              }
         
         startTime = SDL_GetTicks();
