@@ -1,5 +1,6 @@
 
 # files to be ignored
+.idea
 .idea/copyright/
 .idea/.name
 .idea/compiler.xml
