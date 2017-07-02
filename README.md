@@ -1,5 +1,5 @@
 # tic-tac-toe
-A simple tic tac toe game in C using SDL2 library
+A hard tic tac toe game in C using SDL2 library.The game will go into a draw at maximum.
 
 # Pre Requisites
 * gcc
