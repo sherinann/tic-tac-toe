@@ -9,5 +9,5 @@
 .idea/tic-tac-toe.iml
 .idea/vcs.xml
 .idea/workspace.xml
-
+src/tic-tac-toe.xcodeproj
 .DS_Store
